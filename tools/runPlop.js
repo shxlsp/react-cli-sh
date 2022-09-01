@@ -1,4 +1,6 @@
-
+const {
+    isWindows
+} = require('./confirmSystem');
 const runPlop = () => {
     const path = require("path");
     const pkgPath = require.resolve(`plop/package.json`);
@@ -7,7 +9,12 @@ const runPlop = () => {
     // console.log(pkgPath);
     // console.log(__dirname);
     // console.log(process.cwd());
-    import(path.resolve(path.dirname(pkgPath), pkg.bin.plop));
+    console.log(pkgPath);
+    getPath = () => {
+        const prefix = isWindows() ? 'file://' : '';
+        return `${prefix}${path.resolve(path.dirname(pkgPath), pkg.bin.plop)}`
+    }
+    import(getPath());
 };
 
 module.exports = runPlop

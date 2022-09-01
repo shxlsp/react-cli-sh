@@ -1,30 +1,52 @@
-const path = require('path')
+const path = require('path');
+const {
+    confirmSystem: {
+        isWindows
+    }
+} = require('./tools/index');
 const pubPath = path.dirname(__filename);
 const validateEmpty = (value) => {
     return value.length > 0;
 }
+const commandList = ['yarn', 'cnpm', 'npm'];
 module.exports = function (plop) {
     plop.setActionType('install', function (answers, config, plop) {
         // 返回执行命令的目录
         // process.cwd()
-        const child_process = require('child_process')
-        const command = 'yarn';
-        const args = ['install']
-        const cwd = path.join(process.cwd(), answers.name)
-        const task = child_process.spawn(command, args, { cwd });
-        task.on('close', () => {
-            console.log('依赖安装完成');
-            console.log(`执行: cd ${answers.name}，进入目录`);
-            console.log(`进入目录后，执行 yarn dev，启动项目`);
-        });
-        task.stdout.on('data', data => {
-            console.log(`${data}`);
-        });
+        function install(command = commandList[0]) {
+            const child_process = require('child_process')
+            const args = ['install']
+            const cwd = path.join(process.cwd(), answers.name)
+            const getRelCommand = (command) => {
+                return `${command}${isWindows()? '.cmd':''}`
+            }
+            const task = child_process.spawn(getRelCommand(command), args, {
+                cwd
+            });
+            task.on('close', () => {
+                console.log('依赖安装完成');
+                console.log(`执行: cd ${answers.name}，进入目录`);
+                console.log(`进入目录后，执行 yarn dev，启动项目`);
+            });
+            task.stdout.on('data', data => {
+                console.log(`${data}`);
+            });
+            task.on('error', (data) => {
+                console.log('' + data)
+                console.log(`未找到command: ${command}`)
+                const nextIndex = commandList.findIndex(item => item === command) + 1;
+                if (!commandList[nextIndex]) {
+                    // console.log(`依赖下载失败，执行: cd ${answers.name}，进入目录后手动安装依赖`);
+                    throw `依赖下载失败，执行: cd ${answers.name}，进入目录后手动安装依赖`;
+                }
+                install(commandList[nextIndex]);
+            });
+        }
+        install()
     });
     const res = plop.setGenerator('component', {
         description: '新建项目',
-        prompts: [
-            {
+        prompts: [{
                 type: 'input',
                 name: 'name',
                 message: '请输入项目名称',
@@ -54,7 +76,9 @@ module.exports = function (plop) {
                 message: '是否创建less文件?'
             },
         ],
-        actions: ({ hasLess }) => {
+        actions: ({
+            hasLess
+        }) => {
             const actions = [];
             // 添加package.json
             actions.push({

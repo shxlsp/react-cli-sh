@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+
+const { terminalIO } = require('../tools/index')
+
+const validateEmpty = (value) => {
+    return Boolean(value?.length)
+};
+
+const questionOption = [
+    {
+        type: 'input',
+        name: 'name',
+        message: '请输入项目名称（全小写，单词间以“-”连接）',
+        validate: validateEmpty
+    },
+];
+
+const start = async () => {
+    const inputOptions = await terminalIO(questionOption);
+    console.log(inputOptions, '用户输入数据集合');
+    // path.resolve(process.cwd(), configPath)
+    // process.cwd() 当前执行地址
+    // const argv = process.argv.slice(2);
+    // console.log(argv, '环境变量')
+}
+
+start();

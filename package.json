@@ -1,0 +1,30 @@
+{
+  "name": "react-cli-sh",
+  "version": "1.0.0",
+  "description": "react简易脚手架",
+  "main": "./src/index.js",
+  "bin": {
+    "react-cli-sh": "./bin/react-cli-sh"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/shxlsp/react-cli-sh.git"
+  },
+  "author": "shx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shxlsp/react-cli-sh/issues"
+  },
+  "homepage": "https://github.com/shxlsp/react-cli-sh#readme",
+  "devDependencies": {
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

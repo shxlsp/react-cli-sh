@@ -2,14 +2,13 @@
   "name": "react-cli-sh",
   "version": "1.0.0",
   "description": "react简易脚手架",
-  "main": "./bin/index.js",
+  "main": "./src/index.js",
   "bin": {
     "react-cli-sh": "./bin/index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "plop": "plop",
-    "dev": "webpack"
+    "dev": "webpack serve"
   },
   "repository": {
     "type": "git",
@@ -21,8 +20,23 @@
     "url": "https://github.com/shxlsp/react-cli-sh/issues"
   },
   "homepage": "https://github.com/shxlsp/react-cli-sh#readme",
+  "devDependencies": {
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "less-loader": "^6.0.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.8.2",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.10.1"
+  },
   "dependencies": {
-    "minimist": "^1.2.6",
-    "plop": "^3.1.1"
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

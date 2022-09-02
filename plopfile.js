@@ -4,7 +4,7 @@ const {
         isWindows
     }
 } = require('./tools/index');
-const pubPath = path.dirname(__filename);
+const pubPath = process.cwd();
 const validateEmpty = (value) => {
     return value.length > 0;
 }
